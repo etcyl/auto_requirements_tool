@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "auto-reqs"
+version = "1.0.0"
+description = "Smart modular dependency manager that auto-updates requirements.txt"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Matt Fleetwood" }]
+license = { text = "MIT" }
+dependencies = ["requests", "stdlib-list"]
+
+[project.scripts]
+auto-reqs = "auto_reqs.cli:main"

@@ -1,0 +1,16 @@
+pyproject.toml
+auto_reqs/__init__.py
+auto_reqs/classifier.py
+auto_reqs/cli.py
+auto_reqs/config.py
+auto_reqs/resolver.py
+auto_reqs/scanner.py
+auto_reqs/stdlib_utils.py
+auto_reqs/updater.py
+auto_reqs/utils.py
+auto_reqs.egg-info/PKG-INFO
+auto_reqs.egg-info/SOURCES.txt
+auto_reqs.egg-info/dependency_links.txt
+auto_reqs.egg-info/entry_points.txt
+auto_reqs.egg-info/requires.txt
+auto_reqs.egg-info/top_level.txt

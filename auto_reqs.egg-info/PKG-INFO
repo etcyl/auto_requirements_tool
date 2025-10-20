@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: auto-reqs
+Version: 1.0.0
+Summary: Smart modular dependency manager that auto-updates requirements.txt
+Author: Matt Fleetwood
+License: MIT
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: requests
+Requires-Dist: stdlib-list

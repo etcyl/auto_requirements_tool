@@ -1,0 +1,2 @@
+[console_scripts]
+auto-reqs = auto_reqs.cli:main
