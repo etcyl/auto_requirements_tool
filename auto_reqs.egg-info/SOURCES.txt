@@ -14,3 +14,4 @@ auto_reqs.egg-info/dependency_links.txt
 auto_reqs.egg-info/entry_points.txt
 auto_reqs.egg-info/requires.txt
 auto_reqs.egg-info/top_level.txt
+tests/test_utils.py

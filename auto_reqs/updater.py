@@ -37,34 +37,55 @@ def determine_changes(imports, installed, requirements, resolver, repo_path):
     """
     Compare imports vs requirements and detect missing or unused packages.
     Filters out stdlib and local modules, normalizes all names.
+    Dynamically imports helpers at runtime so monkeypatches take effect.
     """
+    # --- Dynamic imports (ensures test patches are honored) ---
+    from auto_reqs.classifier import is_stdlib, is_local_module
+    from auto_reqs.resolver import resolve_import_to_pkg
+    from auto_reqs.utils import normalize_pkg_name
+
     missing, unused = [], []
 
-    # Filter out stdlib and local imports
-    imports_filtered = [
-        imp
-        for imp in imports
-        if not is_stdlib(imp)
-        and not is_local_module(imp, repo_path)
-        and not imp.startswith("_")
-    ]
+    def norm(name: str) -> str:
+        """Normalize consistently across imports, installed, and requirements."""
+        if not name:
+            return ""
+        return normalize_pkg_name(name).lower().replace("_", "-")
 
-    normalized_imports = {normalize_pkg_name(imp) for imp in imports_filtered}
+    # Normalize all dict keys for consistent comparison
+    installed_norm = {norm(k): v for k, v in installed.items()}
+    requirements_norm = {norm(k): v for k, v in requirements.items()}
 
-    # Detect missing packages
-    for norm_imp in sorted(normalized_imports):
-        if norm_imp not in requirements:
-            pkg_name = normalize_pkg_name(resolve_import_to_pkg(norm_imp))
-            version = installed.get(pkg_name) or resolver(pkg_name)
+    # Filter and normalize imports
+    imports_norm = {
+        norm(i)
+        for i in imports
+        if not is_stdlib(i)
+        and not is_local_module(i, repo_path)
+        and not i.startswith("_")
+    }
+
+    # --- Detect missing packages ---
+    for pkg in sorted(imports_norm):
+        if pkg not in requirements_norm:
+            resolved = norm(resolve_import_to_pkg(pkg))
+            version = (
+                installed_norm.get(resolved)
+                or installed_norm.get(pkg)
+                or resolver(resolved)
+                or resolver(pkg)
+            )
             if version:
-                requirements[pkg_name] = version
-                missing.append((pkg_name, version))
+                requirements[resolved] = version
+                requirements_norm[resolved] = version
+                missing.append((resolved, version))
             else:
-                print(f"Warning: Could not find version for '{norm_imp}'")
+                print(f"Warning: Could not find version for '{pkg}'")
 
-    # Detect unused packages
+    # --- Detect unused packages ---
+    imports_set = set(imports_norm)
     for pkg in list(requirements.keys()):
-        if pkg not in normalized_imports:
+        if norm(pkg) not in imports_set:
             unused.append(pkg)
             del requirements[pkg]
 
