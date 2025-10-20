@@ -5,7 +5,7 @@ This tool scans your codebase, compares imports against installed packages, and 
 
 ---
 
-## 🚀 Features
+##  Features
 - Detects new imports and missing dependencies.
 - Removes unused or stale entries from `requirements.txt`.
 - Differentiates between **stdlib**, **local**, and **third-party** modules.
@@ -14,7 +14,7 @@ This tool scans your codebase, compares imports against installed packages, and 
 
 ---
 
-## ⚙️ Installation
+##  Installation
 
 ### Using Conda (recommended)
 ```bash
@@ -32,7 +32,7 @@ pip install -e .
 
 ---
 
-## 🧠 Usage
+##  Usage
 
 ### Basic Scan
 Run from the root of your repository:
@@ -62,7 +62,7 @@ Removed 1 unused package:
 
 ---
 
-## 🧩 Project Structure
+##  Project Structure
 ```
 auto_requirements_tool/
 ├── auto_reqs/
@@ -82,7 +82,7 @@ auto_requirements_tool/
 
 ---
 
-## 🧪 Developer Setup
+##  Developer Setup
 
 ### Run Tests
 ```bash
@@ -103,7 +103,7 @@ find . -name "*.pyc" -delete
 
 ---
 
-## 🧰 Example Development Workflow
+##  Example Development Workflow
 ```bash
 git clone https://github.com/yourusername/auto_requirements_tool.git
 cd auto_requirements_tool
@@ -117,12 +117,12 @@ pytest -v
 
 ---
 
-## 📄 License
+##  License
 MIT License (omit if internal-only).
 
 ---
 
-## 🧭 Notes
+##  Notes
 - The tool relies on `stdlib-list` to identify Python’s standard library modules.
 - Tested with Python 3.11 and 3.12 on Linux.
 - For maximum accuracy, ensure your virtual environment matches your active imports.
